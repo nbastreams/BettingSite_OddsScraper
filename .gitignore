@@ -4,6 +4,8 @@
 .DS_Store
 chromedriver_mac64/
 
+*.png
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
