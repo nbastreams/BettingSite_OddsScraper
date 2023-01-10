@@ -37,11 +37,11 @@ email = browser.find_element_by_xpath('//*[@id="email-input"]')
 password = browser.find_element_by_xpath('//*[@id="root"]/div/div[4]/div[1]/div[1]/div[2]/form/div[3]/input')
 
 myEmail = ''
-email.send_keys('kwiskel@gmail.com')
+email.send_keys(myEmail)
 time.sleep(1)
 
 myPassword = ''
-password.send_keys('23WCGazStNvmVMp@')
+password.send_keys(myPassword)
 time.sleep(1)
 
 submit = browser.find_element_by_xpath('//*[@id="submit-btn"]')
