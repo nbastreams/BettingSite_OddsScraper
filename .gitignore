@@ -1,10 +1,11 @@
 # other
-#Pipfile
-#Pipfile.lock
+Pipfile
+Pipfile.lock
 .DS_Store
 chromedriver_mac64/
 
 *.png
+*.csv
 
 
 # Byte-compiled / optimized / DLL files
