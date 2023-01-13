@@ -12,4 +12,4 @@ And find positive EV bets for the following sites: <br>
 -Underdog (coming) <br>
 -Fanduels (coming) <br>
 
-See wiki for more info
+Currently stores and scraped data in separate csv files (by sportsbook)
