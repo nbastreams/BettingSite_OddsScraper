@@ -1,8 +1,9 @@
+# Can rewrite this using requests-html! or simply requests?
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-import time
 import json
 import csv
 
@@ -14,11 +15,10 @@ relationship_tags = ['league', 'name', 'position', 'team']
 #projection_tags = ['id'] + relationship_tags + attribute_tags
 projection_tags = relationship_tags + attribute_tags
 
-web = 'https://api.prizepicks.com/projections' 
+url = 'https://api.prizepicks.com/projections' 
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
 
 chrome_options = webdriver.ChromeOptions()
-#chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument("user-agent={}".format(user_agent))
 chrome_options.add_argument('headless')
 chrome_options.add_argument('window-size=1920x1080')
@@ -26,7 +26,7 @@ chrome_options.add_argument('window-size=1920x1080')
 browser = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=chrome_options)
 
 
-browser.get(web)
+browser.get(url)
 browser.implicitly_wait(10)
 #browser.get_screenshot_as_file('main-page.png')
 
