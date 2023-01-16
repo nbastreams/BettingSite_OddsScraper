@@ -17,12 +17,8 @@ file_name = 'pinnacle.csv'
 sports = {
     "basketball" : {
         "nba", 
-        "ncaa"
-    },
-    "esports/games" : {
-        "csgo",
-        "league-of-legends",
-        "dota-2"
+        "ncaa",
+        "australia-nbl"
     },
     "football" : {
         "nfl",
@@ -31,19 +27,29 @@ sports = {
     "hockey" : {
         "nhl"
     },
-    # "soccer" : {
-    #     "germany-bundesliga",
-    #     "uefa-champions-league",
-    #     "uefa-europa-league",
-    #     "spain-la-liga",
-    #     "france-ligue-1",
-    #     "england-premier-league",
-    #     "italy-serie-a"
-    # },
-    # "baseball" : {
-    #     "mlb"
-    # }
+    "soccer" : { 
+    "germany-bundesliga",
+    "uefa-champions-league",
+    "uefa-europa-league",
+    "spain-la-liga",
+    "france-ligue-1",
+    "england-premier-league",
+    "italy-serie-a"
+    },
+    "baseball" : {
+        "mlb"
+    }
 }
+
+# sports = {
+#     "esports/games" : { # have to scroll to get links **
+#         "csgo",
+#         "league-of-legends",
+#         "dota-2"
+#     },
+    # "tennis" : None,
+    # "boxing" : None,
+# }
 
 
 
@@ -58,7 +64,11 @@ for sport in sports:
     leagues = sports[sport]
     if leagues is not None:
         for league in leagues:
-            league_url = url + "/en/{}/{}/matchups/".format(sport, league)
+            # check if the sport is esports -> urls are slightly different format
+            if sport == "esports":
+                league_url = url + "/en/{}/games/{}/matchups/".format(sport, league)
+            else:
+                league_url = url + "/en/{}/{}/matchups/".format(sport, league)
             league_urls.append(league_url)
 
             # find all the urls on the page
@@ -69,7 +79,11 @@ for sport in sports:
             # check which urls are an actual match (and not a random url)
             for possible_match_url in possible_match_urls:
                 if possible_match_url.startswith("{}{}/{}".format("/en/", sport, league)):
+                    #print(possible_match_url)
                     match_urls.append(possible_match_url)
+            
+            # print the number of actual match links for each league
+            #print("{}: {}".format(league, len(match_urls)))
 
     
     else:
@@ -86,6 +100,8 @@ for sport in sports:
                 #print(possible_match_url)
                 match_urls.append(possible_match_url)
 
+
+
 # create empty csv then write header
 with open(file_name, mode='w', encoding='utf-8-sig') as csv_file:
     writer = csv.DictWriter(csv_file, fieldnames=projection_tags, extrasaction='ignore', dialect='excel')
@@ -93,6 +109,12 @@ with open(file_name, mode='w', encoding='utf-8-sig') as csv_file:
 
 # loop through all the match urls (for every sport/league)
 for match_url in match_urls:
+    
+    # check for tennis or baseball
+    if match_url.contains("tennis"):
+        pass
+    elif match_url.contains("boxing"):
+        pass
     try:
         # load the player props page
         match_prop_url = "{}{}{}".format(url, match_url, "/#player-props")
@@ -121,13 +143,13 @@ for match_url in match_urls:
                     prop = {'player_name': player_name, 'game_time': game_time, 'prop_type': prop_type, 'prop_line': prop_line, 'odds_over': odds_over, 'odds_under': odds_under}
                     props.append(prop)
                 except Exception as e:
-                    print(e)
+                    #print(e)
                     pass
                 
                 prop_id+=1
 
             except Exception as e:
-                print(e)
+                #print(e)
                 break
         
         # for each match_url append the player props (if not empty)
@@ -139,7 +161,7 @@ for match_url in match_urls:
                     writer.writerow(prop)
 
     except Exception as e:
-        print(e)
+        #print(e)
         pass
 
 session.close()
