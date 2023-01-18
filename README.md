@@ -13,3 +13,6 @@ And find positive EV bets for the following sites: <br>
 -Fanduels (coming) <br>
 
 Currently stores and scraped data in separate csv files (by sportsbook)
+
+** THIS IS A WORK IN PROGRESS ** <br>
+and so far doesn't have too much functionality <br>
